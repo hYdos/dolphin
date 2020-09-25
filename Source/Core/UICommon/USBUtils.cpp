@@ -43,14 +43,17 @@ std::map<std::pair<u16, u16>, std::string> GetInsertedDevices()
     return devices;
 
   context.GetDeviceList([&](libusb_device* device) {
-    libusb_device_descriptor descr;
+    libusb_device_descriptor descr{};
     libusb_get_device_descriptor(device, &descr);
     const std::pair<u16, u16> vid_pid{descr.idVendor, descr.idProduct};
     devices[vid_pid] = GetDeviceName(vid_pid);
     return true;
   });
 #endif
-
+  // Skylanders
+  printf("Faked skylander portal");
+    const std::pair<u16, u16> vid_pid{0x1430, 0x0150};
+    devices[vid_pid] = GetDeviceName(vid_pid);
   return devices;
 }
 
